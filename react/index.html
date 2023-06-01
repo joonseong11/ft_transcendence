@@ -56,8 +56,15 @@
 	}
 	function KmToMiles() {
 		const [length, setLength] = React.useState(0);
+		const [Fliped, setFliped] = React.useState(false);
 		const onChange = (event) => {
-			console.log(event);
+			setLength(event.target.value);
+		}
+		const reset = () => {
+			setLength(0);
+		}
+		const onFlip = () => {
+			setFliped((current) => !current)
 		}
 		return (
 			<div>
@@ -67,20 +74,25 @@
 						<label>Kilometers</label>
 						<input
 							type="number"
+							value = {Fliped ? length : Math.round(length * 1.609)}
+							onChange={onChange}
+							disabled={!Fliped}
 						/>
 					</div>
 					<div>
 							<label htmlFor="Miles">Miles</label>
 							<input 
 								id="Miles"
-								value = {length / 1.609}
+								value = {Fliped ? Math.round(length / 1.609) : length}
 								type="number"
 								onChange={onChange}
-								disabled
+								disabled={Fliped}
 							/>
 					</div>
 				</div>
-				<button>button</button></div>
+				<button onClick={reset}>Reset</button>
+				<button onClick={onFlip}>Flip</button>
+			</div>
 		);
 	}
 	function App() {
